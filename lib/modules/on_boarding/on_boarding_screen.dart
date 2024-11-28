@@ -51,7 +51,23 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Scaffold(
       appBar: AppBar(
         actions: [
-
+          TextButton(
+              onPressed: (){
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context)=> LogingScreen()),
+                      (Route<dynamic> route)=> false,
+                );
+              },
+              child: Text(
+                'Skip',
+                style: TextStyle(
+                  color: defaultColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+          ),
         ],
       ),
       body: Padding(
