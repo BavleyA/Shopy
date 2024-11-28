@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shop_app/shared/styles/colors/colors.dart';
 
 ThemeData darkTheme = ThemeData(
-  primarySwatch: Colors.red,
+  primarySwatch: defaultColor,
   scaffoldBackgroundColor: HexColor('333739'),
   appBarTheme: AppBarTheme(
     titleSpacing: 20.0,
@@ -23,7 +24,7 @@ ThemeData darkTheme = ThemeData(
     ),
   ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: Colors.red,
+    backgroundColor: defaultColor,
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     selectedItemColor: Colors.red,
@@ -43,7 +44,7 @@ ThemeData darkTheme = ThemeData(
 );
 
 ThemeData lightTheme = ThemeData(
-  primarySwatch: Colors.red,
+  primarySwatch: defaultColor,
   scaffoldBackgroundColor: Colors.white,
   appBarTheme: AppBarTheme(
     titleSpacing: 20.0,
@@ -63,7 +64,7 @@ ThemeData lightTheme = ThemeData(
     ),
   ),
   floatingActionButtonTheme: FloatingActionButtonThemeData(
-    backgroundColor: Colors.red,
+    backgroundColor: defaultColor,
   ),
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
     selectedItemColor: Colors.red,
