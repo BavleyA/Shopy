@@ -39,6 +39,7 @@ ThemeData darkTheme = ThemeData(
         color: Colors.white
     ),
   ),
+  fontFamily: 'loraReg'
 );
 
 ThemeData lightTheme = ThemeData(
@@ -78,4 +79,5 @@ ThemeData lightTheme = ThemeData(
       color: Colors.black,
     ),
   ),
+    fontFamily: 'loraReg'
 );
