@@ -12,3 +12,5 @@ class LoginErrorState extends ShopLoginStates {
 
   LoginErrorState(this.error);
 }
+
+class LoginChangePasswordVisibilityState extends ShopLoginStates{}
