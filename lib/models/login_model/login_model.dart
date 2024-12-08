@@ -3,26 +3,27 @@ class LoginModel {
   late bool status;
   late String message;
 
-  late UserData data;
+  late UserData? data;
 
   LoginModel.fromJson(Map<String,dynamic> json){
     status = json['status'];
     message = json['message'];
-    data = (json['data'] != null ? UserData.fromJson(json['data']) : null)!;
+    //data = UserData.fromJson(json['data']) ;
+    data = (json['data'] != null ? UserData.fromJson(json['data']) : null);
   }
 
 }
 
 class UserData {
 
-  late int id;
-  late String name;
-  late String email;
-  late String phone;
-  late String image;
-  late int points;
-  late int credits;
-  late String token;
+  late int? id;
+  late String? name;
+  late String? email;
+  late String? phone;
+  late String? image;
+  late int? points;
+  late int? credits;
+  late String? token;
 
   UserData({
     required this.id,
@@ -39,10 +40,10 @@ class UserData {
     id = json['id'];
     name = json['name'];
     email = json['email'];
-    phone = json['phone'];
+    phone = json['phone'] ;
     image = json['image'];
-    points = json['points'];
+    points = json['points'] ;
     credits = json['credits'];
-    token = json['token'];
+    token = json['token'] ;
   }
 }

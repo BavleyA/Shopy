@@ -23,7 +23,7 @@ class LogingScreen extends StatelessWidget {
 
             if(state.loginModel.status){
               print(state.loginModel.message);
-              print(state.loginModel.data.token);
+              print(state.loginModel.data?.token);
 
               Fluttertoast.showToast(
                   msg: state.loginModel.message,
