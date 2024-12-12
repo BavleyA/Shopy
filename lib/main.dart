@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:shop_app/layout/home_layout.dart';
 import 'package:shop_app/modules/login/loging_screen.dart';
 import 'package:shop_app/shared/bloc_observer.dart';
 import 'package:shop_app/shared/cubit/appCubit.dart';
@@ -18,16 +19,28 @@ void main() async {
   DioHelper.init();
   await CacheHelper.init();
 
-  bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
+  Widget widget;
 
-  runApp(MyApp(onBoarding : onBoarding!));
+  bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
+  String? token = CacheHelper.getData(key: 'token');
+
+  if(onBoarding != null){
+    if(token!=null){
+      widget = HomeLayout();
+    }
+    else widget = LogingScreen();
+  }
+  else {
+    widget = OnBoardingScreen();
+  }
+  runApp(MyApp(startWidget : widget));
 }
 
 class MyApp extends StatelessWidget {
 
   //final bool isDark;
-  final bool onBoarding;
-  MyApp({required this.onBoarding});
+  final Widget startWidget;
+  MyApp({required this.startWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +56,7 @@ class MyApp extends StatelessWidget {
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
-            home: onBoarding ? LogingScreen() : OnBoardingScreen(),
+            home: startWidget,
           );
         },
       ),
