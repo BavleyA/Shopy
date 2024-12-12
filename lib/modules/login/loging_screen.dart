@@ -2,9 +2,11 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shop_app/layout/home_layout.dart';
 import 'package:shop_app/modules/login/cubit/cubit.dart';
 import 'package:shop_app/modules/login/cubit/states.dart';
 import 'package:shop_app/modules/register/register_screen.dart';
+import 'package:shop_app/shared/network/local/cache_helper.dart';
 
 class LogingScreen extends StatelessWidget {
 
@@ -25,6 +27,13 @@ class LogingScreen extends StatelessWidget {
               print(state.loginModel.message);
               print(state.loginModel.data?.token);
 
+              CacheHelper.saveData(key: 'token', value: state.loginModel.data?.token).then((value){
+
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder : (context)=> HomeLayout()),
+                    (Route<dynamic> route) => false);
+
+              });
               Fluttertoast.showToast(
                   msg: state.loginModel.message,
                   toastLength: Toast.LENGTH_LONG,
