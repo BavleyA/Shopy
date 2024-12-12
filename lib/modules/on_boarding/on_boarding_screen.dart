@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/modules/login/loging_screen.dart';
+import 'package:shop_app/shared/network/local/cache_helper.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../shared/styles/colors/colors.dart';
@@ -46,6 +47,23 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   bool isLast = false ;
 
+
+  void submit(){
+    CacheHelper.saveData(key: 'onBoarding', value: true).then((value){
+
+      if(value) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => LogingScreen()),
+              (Route<dynamic> route) => false,
+        );
+      }
+
+    });
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,11 +71,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         actions: [
           TextButton(
               onPressed: (){
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context)=> LogingScreen()),
-                      (Route<dynamic> route)=> false,
-                );
+                submit();
               },
               child: Text(
                 'Skip',
@@ -113,11 +127,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 FloatingActionButton(
                     onPressed: (){
                       if(isLast){
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context)=> LogingScreen()),
-                            (Route<dynamic> route)=> false,
-                        );
+                        submit();
                       }
                       else{
                         boardController.nextPage(
