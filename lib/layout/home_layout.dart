@@ -25,7 +25,14 @@ class HomeLayout extends StatelessWidget {
             ),
           ),
           body: cubit.bottomScreens[cubit.currentIndex],
-          bottomNavigationBar: BottomNavigationBar(items:[
+          bottomNavigationBar: BottomNavigationBar(
+
+            onTap: (index){
+              cubit.changeBottomNavBar(index);
+            },
+            currentIndex: cubit.currentIndex,
+
+            items:[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
