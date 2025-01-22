@@ -10,6 +10,7 @@ import 'package:shop_app/shared/cubit/appCubitStates.dart';
 import 'package:shop_app/shared/network/local/cache_helper.dart';
 import 'package:shop_app/shared/network/remote/dio_helper.dart';
 import 'package:shop_app/shared/styles/themes.dart';
+import 'package:shop_app/shop_cubit/cubit.dart';
 
 import 'modules/on_boarding/on_boarding_screen.dart';
 
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider( create: (BuildContext context) => AppCubit(),),
+        BlocProvider( create: (BuildContext context) => ShopCubit(),),
       ],
       child: BlocConsumer<AppCubit , AppStates>(
         listener: (context ,states) {},
