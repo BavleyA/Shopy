@@ -11,7 +11,7 @@ import 'package:shop_app/shared/network/local/cache_helper.dart';
 import 'package:shop_app/shared/network/remote/dio_helper.dart';
 import 'package:shop_app/shared/styles/themes.dart';
 import 'package:shop_app/shop_cubit/cubit.dart';
-
+import 'package:shop_app/shared/components/constants.dart';
 import 'modules/on_boarding/on_boarding_screen.dart';
 
 void main() async {
@@ -23,7 +23,7 @@ void main() async {
   Widget widget;
 
   bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
-  String? token = CacheHelper.getData(key: 'token');
+  token = CacheHelper.getData(key: 'token');
 
   if(onBoarding != null){
     if(token!=null){

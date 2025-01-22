@@ -36,10 +36,17 @@ class ShopCubit extends Cubit<ShopStates>{
   void getHomeDate(){
     emit(ShopLoadingState());
 
-    DioHelper.getData(url: HOME).then((value) {
+    DioHelper.getData(
+      url: HOME,
+      token:token,
+
+    ).then((value) {
       homeModel = HomeModel.fromJson(value?.data);
 
-      printFullText(homeModel.toString());
+      //printFullText(homeModel.toString());
+      print(homeModel?.data?.banners[0].image);
+      print(homeModel?.status);
+
       emit(ShopSuccessfulState());
 
     }).catchError((error){
