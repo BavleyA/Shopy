@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app/models/categories_model/categories_model.dart';
 import 'package:shop_app/models/home_model/home_model.dart';
 import 'package:shop_app/shared/styles/colors/colors.dart';
 import 'package:shop_app/shop_cubit/cubit.dart';
@@ -16,8 +17,8 @@ class ProductsScreen extends StatelessWidget {
       listener: (context,state) {},
       builder: (context , state) {
         return ConditionalBuilder(
-          condition: ShopCubit.get(context).homeModel!=null,
-          builder: (context) => homeProductsBuilder(ShopCubit.get(context).homeModel),
+          condition: ShopCubit.get(context).homeModel!=null && ShopCubit.get(context).categoriesModel!=null,
+          builder: (context) => homeProductsBuilder(ShopCubit.get(context).homeModel , ShopCubit.get(context).categoriesModel),
           fallback: (context) => const Center(child: CircularProgressIndicator(color: defaultColor,)),
         );
     },
@@ -25,7 +26,7 @@ class ProductsScreen extends StatelessWidget {
     );
   }
 
-  Widget homeProductsBuilder(HomeModel? model) => SingleChildScrollView(
+  Widget homeProductsBuilder(HomeModel? model , CategoriesModel? categoriesModel) => SingleChildScrollView(
     physics: const BouncingScrollPhysics(),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,9 +70,9 @@ class ProductsScreen extends StatelessWidget {
                 child: ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                    itemBuilder: (context,index) => categoryItemBuilder(),
+                    itemBuilder: (context,index) => categoryItemBuilder(categoriesModel.data!.data[index]),
                     separatorBuilder: (context,index) => const SizedBox(width: 10.0,),
-                    itemCount: 10,
+                    itemCount: categoriesModel!.data!.data.length,
                 ),
               ),
               const SizedBox(height: 20.0,),
@@ -188,11 +189,13 @@ class ProductsScreen extends StatelessWidget {
     ),
   );
 
-  Widget categoryItemBuilder() => Stack(
+  Widget categoryItemBuilder(DataModel model) => Stack(
     alignment: AlignmentDirectional.bottomCenter,
     children: [
-      const Image(
-        image: NetworkImage('https://student.valuxapps.com/storage/uploads/categories/16893929290QVM1.modern-devices-isometric-icons-collection-with-sixteen-isolated-images-computers-periphereals-variou.jpeg'),
+      Image(
+        image: NetworkImage(
+          model.image!,
+        ),
         height: 100.0,
         width: 100.0,
         fit: BoxFit.cover,
@@ -200,8 +203,8 @@ class ProductsScreen extends StatelessWidget {
       Container(
         color: Colors.black.withOpacity(0.8),
         width: 100,
-        child: const Text(
-          'Electronics',
+        child: Text(
+          model.name!,
           textAlign: TextAlign.center,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

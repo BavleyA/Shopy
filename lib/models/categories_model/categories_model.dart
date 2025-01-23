@@ -14,7 +14,7 @@ class CategoriesDataModel{
   CategoriesDataModel.fromJson(Map<String , dynamic> json){
     currentPage = json['current_page'];
     json['data'].forEach((element) {
-      data.add(DataModel.fromJson(json['data']));
+      data.add(DataModel.fromJson(element));
     });
   }
 
