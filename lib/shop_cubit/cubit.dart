@@ -54,5 +54,5 @@ class ShopCubit extends Cubit<ShopStates>{
       emit(ShopErrorState());
     });
   }
-  
+
 }

@@ -28,6 +28,7 @@ class ProductsScreen extends StatelessWidget {
   Widget homeProductsBuilder(HomeModel? model) => SingleChildScrollView(
     physics: const BouncingScrollPhysics(),
     child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CarouselSlider(
           items: model?.data?.banners.map((element)=>
@@ -47,6 +48,41 @@ class ProductsScreen extends StatelessWidget {
             autoPlayAnimationDuration: const Duration(seconds: 1),
             autoPlayCurve: Curves.fastOutSlowIn,
             scrollDirection: Axis.horizontal,
+          ),
+        ),
+        const SizedBox(height: 10.0,),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Categories',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+              const SizedBox(height: 10.0,),
+              Container(
+                height: 100.0,
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                    itemBuilder: (context,index) => categoryItemBuilder(),
+                    separatorBuilder: (context,index) => const SizedBox(width: 10.0,),
+                    itemCount: 10,
+                ),
+              ),
+              const SizedBox(height: 20.0,),
+              const Text(
+                'Products',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 10.0,),
@@ -150,5 +186,30 @@ class ProductsScreen extends StatelessWidget {
 
       ],
     ),
+  );
+
+  Widget categoryItemBuilder() => Stack(
+    alignment: AlignmentDirectional.bottomCenter,
+    children: [
+      const Image(
+        image: NetworkImage('https://student.valuxapps.com/storage/uploads/categories/16893929290QVM1.modern-devices-isometric-icons-collection-with-sixteen-isolated-images-computers-periphereals-variou.jpeg'),
+        height: 100.0,
+        width: 100.0,
+        fit: BoxFit.cover,
+      ),
+      Container(
+        color: Colors.black.withOpacity(0.8),
+        width: 100,
+        child: const Text(
+          'Electronics',
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+      ),
+    ],
   );
 }
