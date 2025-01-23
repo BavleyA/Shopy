@@ -117,7 +117,8 @@ class ProductsScreen extends StatelessWidget {
                   Text(
                     '${model.price!.round()}',
                     style: TextStyle(
-                      fontSize: 12.0,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
                       color: defaultColor,
                     ),
                   ),
@@ -126,7 +127,7 @@ class ProductsScreen extends StatelessWidget {
                     Text(
                       '${model.oldPrice!.round()}',
                       style: TextStyle(
-                        fontSize: 10.0,
+                        fontSize: 14.0,
                         color: Colors.grey,
                         decoration: TextDecoration.lineThrough,
                       ),
