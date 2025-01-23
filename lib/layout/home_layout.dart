@@ -44,6 +44,8 @@ class HomeLayout extends StatelessWidget {
             },
             currentIndex: cubit.currentIndex,
 
+            selectedItemColor: defaultColor,
+
             items:[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
