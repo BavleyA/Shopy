@@ -18,7 +18,7 @@ class ProductsScreen extends StatelessWidget {
       builder: (context , state) {
         return ConditionalBuilder(
           condition: ShopCubit.get(context).homeModel!=null && ShopCubit.get(context).categoriesModel!=null,
-          builder: (context) => homeProductsBuilder(ShopCubit.get(context).homeModel , ShopCubit.get(context).categoriesModel),
+          builder: (context) => homeProductsBuilder(ShopCubit.get(context).homeModel , ShopCubit.get(context).categoriesModel , context),
           fallback: (context) => const Center(child: CircularProgressIndicator(color: defaultColor,)),
         );
     },
@@ -26,7 +26,7 @@ class ProductsScreen extends StatelessWidget {
     );
   }
 
-  Widget homeProductsBuilder(HomeModel? model , CategoriesModel? categoriesModel) => SingleChildScrollView(
+  Widget homeProductsBuilder(HomeModel? model , CategoriesModel? categoriesModel, context) => SingleChildScrollView(
     physics: const BouncingScrollPhysics(),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,7 +98,7 @@ class ProductsScreen extends StatelessWidget {
             childAspectRatio: 1 / 1.58,
             children: List.generate(
                 model!.data!.products.length,
-                (index) => buildGridProduct(model.data!.products[index]),
+                (index) => buildGridProduct(model.data!.products[index] , context),
             ),
 
 
@@ -108,7 +108,7 @@ class ProductsScreen extends StatelessWidget {
     ),
   );
 
-  Widget buildGridProduct(ProductModel model) => Container(
+  Widget buildGridProduct(ProductModel model ,context) => Container(
     color: Colors.white,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,10 +173,10 @@ class ProductsScreen extends StatelessWidget {
                   IconButton(
                     padding: EdgeInsets.zero,
                       onPressed: (){},
-                      icon: const CircleAvatar(
+                      icon: CircleAvatar(
                         radius: 15.0,
-                        backgroundColor: Colors.grey,
-                        child: Icon(
+                        backgroundColor: ShopCubit.get(context).isFav[model.id]! ? defaultColor : Colors.grey ,
+                        child: const Icon(
                           Icons.favorite_outline_rounded,
                           size: 14.0,
                           color: Colors.white,
