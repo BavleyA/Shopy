@@ -32,7 +32,9 @@ class ShopCubit extends Cubit<ShopStates>{
     emit(ShopChangeBottomNav());
   }
 
-  HomeModel? homeModel ;
+  HomeModel? homeModel;
+
+  Map<int,bool> isFav = {};
 
   void getHomeDate(){
     emit(ShopLoadingState());
@@ -47,6 +49,11 @@ class ShopCubit extends Cubit<ShopStates>{
       //printFullText(homeModel.toString());
       print(homeModel?.data?.banners[0].image);
       print(homeModel?.status);
+      homeModel?.data?.products.forEach((element) {
+        isFav.addAll({
+          element.id!: element.inFavourite!,
+        });
+      });
 
       emit(ShopSuccessfulState());
 
