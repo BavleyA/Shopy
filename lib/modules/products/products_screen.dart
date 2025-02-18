@@ -172,7 +172,9 @@ class ProductsScreen extends StatelessWidget {
                   const Spacer(),
                   IconButton(
                     padding: EdgeInsets.zero,
-                      onPressed: (){},
+                      onPressed: (){
+                      print(model.id);
+                      },
                       icon: CircleAvatar(
                         radius: 15.0,
                         backgroundColor: ShopCubit.get(context).isFav[model.id]! ? defaultColor : Colors.grey ,
