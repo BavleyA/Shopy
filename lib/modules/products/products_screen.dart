@@ -173,6 +173,7 @@ class ProductsScreen extends StatelessWidget {
                   IconButton(
                     padding: EdgeInsets.zero,
                       onPressed: (){
+                      ShopCubit.get(context).changFavourites(model.id!);
                       print(model.id);
                       },
                       icon: CircleAvatar(
