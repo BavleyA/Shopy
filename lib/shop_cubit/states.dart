@@ -13,3 +13,7 @@ class ShopErrorState extends ShopStates {}
 class ShopSuccessfulCategoriesState extends ShopStates  {}
 
 class ShopErrorCategoriesState extends ShopStates {}
+
+class ShopSuccessfulChangeFavouriteState extends ShopStates  {}
+
+class ShopErrorChangeFavouriteState extends ShopStates {}
