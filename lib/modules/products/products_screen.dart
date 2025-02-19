@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/models/categories_model/categories_model.dart';
 import 'package:shop_app/models/home_model/home_model.dart';
 import 'package:shop_app/shared/styles/colors/colors.dart';
@@ -14,7 +15,21 @@ class ProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ShopCubit,ShopStates>(
-      listener: (context,state) {},
+      listener: (context,state) {
+        if(state is ShopSuccessfulChangeFavouriteState){
+          if(!state.model.status!){
+            Fluttertoast.showToast(
+                msg: state.model.message!,
+                toastLength: Toast.LENGTH_LONG,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 5,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0
+            );
+          }
+        }
+      },
       builder: (context , state) {
         return ConditionalBuilder(
           condition: ShopCubit.get(context).homeModel!=null && ShopCubit.get(context).categoriesModel!=null,

@@ -92,7 +92,7 @@ class ShopCubit extends Cubit<ShopStates>{
 
     isFav[productId] = !isFav[productId]!;
 
-    emit(ShopSuccessfulChangeFavouriteState());
+    emit(ShopSuccessfulInitialChangeFavouriteState());
 
     DioHelper.postData(
         url: FAVOURITES,
@@ -104,11 +104,16 @@ class ShopCubit extends Cubit<ShopStates>{
         .then((value) {
           favouritesModel = FavouritesModel.fromJson(value?.data);
           print(value?.data);
-          emit(ShopSuccessfulChangeFavouriteState());
 
-    })
-        .catchError((error){
-          emit(ShopErrorChangeFavouriteState());
+          if(!favouritesModel!.status!){
+            isFav[productId] = !isFav[productId]!;
+          }
+
+          emit(ShopSuccessfulChangeFavouriteState(favouritesModel!));
+
+    }).catchError((error){
+      isFav[productId] = !isFav[productId]!;
+      emit(ShopErrorChangeFavouriteState());
     });
   }
 
