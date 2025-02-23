@@ -22,7 +22,13 @@ class FavouritesScreen extends StatelessWidget {
         return ConditionalBuilder(
           condition: state is! ShopLoadingGetFavouritesState,
           builder: (context) => ListView.separated(
-            itemBuilder: (context , index) => buildFavItem(ShopCubit.get(context).favouritesModel!.data!.data![index] , context ),
+            itemBuilder: (context , index) {
+              var favouritesData = ShopCubit.get(context).favouritesModel?.data?.data;
+              if (favouritesData == null || favouritesData.isEmpty) {
+                return const Center(child: Text('No favourites available.'));
+              }
+              return buildFavItem(favouritesData[index], context);
+            },
             separatorBuilder: (context , index ) => const Divider(color: Colors.grey,),
             itemCount: ShopCubit.get(context).favouritesModel!.data!.data!.length,
           ),
