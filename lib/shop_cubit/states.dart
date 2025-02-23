@@ -17,7 +17,7 @@ class ShopSuccessfulCategoriesState extends ShopStates  {}
 class ShopErrorCategoriesState extends ShopStates {}
 
 class ShopSuccessfulChangeFavouriteState extends ShopStates  {
-  late final FavouritesModel model;
+  late final ChangeFavouritesModel model;
   ShopSuccessfulChangeFavouriteState(this.model);
 }
 
