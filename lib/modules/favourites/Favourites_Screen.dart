@@ -15,85 +15,106 @@ class FavouritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Stack(
-          alignment: AlignmentDirectional.bottomStart,
-          children: [
-            Image(
-              image: NetworkImage(''),
-              width: 120.0,
-              height: 120.0,
-            ),
-            if (1 != 0)
-              Container(
-                color: Colors.red,
-                padding: EdgeInsets.symmetric(horizontal: 5.0),
-                child: const Text(
-                  'DISCOUNT',
-                  style: TextStyle(
-                    fontSize: 10.0,
-                    color: Colors.white,
-                  ),
-                ),
+    return BlocConsumer<ShopCubit, ShopStates>(
+      listener: (context , state ){},
+      builder: (context , state) {
+        return ListView.separated(
+          itemBuilder: (context , index) => buildFavItem(),
+          separatorBuilder: (context , index ) => const Divider(color: Colors.grey,),
+          itemCount: 10,
+        );
+      },
+    );
+  }
+
+  Widget buildFavItem() => Padding(
+    padding: const EdgeInsets.all(20.0),
+    child: Container(
+      height: 120.0,
+      child: Row(
+        children: [
+          Stack(
+            alignment: AlignmentDirectional.bottomStart,
+            children: [
+              Image(
+                image: NetworkImage(''),
+                fit: BoxFit.cover,
+                width: 120.0,
+                height: 120.0,
               ),
-          ],
-        ),
-        SizedBox(width: 20.0),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'iphone',
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: 14.0,
-                height: 1.3,
-              ),
-            ),
-            Row(
-              children: [
-                Text(
-                  '100',
-                  style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    color: defaultColor,
-                  ),
-                ),
-                const SizedBox(width: 5.0),
-                if (1 != 0)
-                  Text(
-                    '5000',
+              if (1 != 0)
+                Container(
+                  color: Colors.red,
+                  padding: EdgeInsets.symmetric(horizontal: 5.0),
+                  child: const Text(
+                    'DISCOUNT',
                     style: TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.grey,
-                      decoration: TextDecoration.lineThrough,
-                    ),
-                  ),
-                const Spacer(),
-                IconButton(
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    //ShopCubit.get(context).changFavourites(model.id!);
-                    //print(model.id);
-                  },
-                  icon: CircleAvatar(
-                    radius: 15.0,
-                    //backgroundColor: ShopCubit.get(context).isFav[model.id]! ? defaultColor : Colors.grey ,
-                    child: const Icon(
-                      Icons.favorite_outline_rounded,
-                      size: 14.0,
+                      fontSize: 10.0,
                       color: Colors.white,
                     ),
                   ),
                 ),
+            ],
+          ),
+          SizedBox(width: 20.0),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'iphone',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    height: 1.3,
+                  ),
+                ),
+                Spacer(),
+                Row(
+                  children: [
+                    Text(
+                      '100',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        color: defaultColor,
+                      ),
+                    ),
+                    const SizedBox(width: 5.0),
+                    if (1 != 0)
+                      Text(
+                        '5000',
+                        style: TextStyle(
+                          fontSize: 14.0,
+                          color: Colors.grey,
+                          decoration: TextDecoration.lineThrough,
+                        ),
+                      ),
+                    const Spacer(),
+                    IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        //ShopCubit.get(context).changFavourites(model.id!);
+                        //print(model.id);
+                      },
+                      icon: CircleAvatar(
+                        radius: 15.0,
+                        //backgroundColor: ShopCubit.get(context).isFav[model.id]! ? defaultColor : Colors.grey ,
+                        child: const Icon(
+                          Icons.favorite_outline_rounded,
+                          size: 14.0,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
-          ],
-        ),
-      ],
-    );
-  }
+          ),
+        ],
+      ),
+    ),
+  );
 }
