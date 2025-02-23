@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/models/categories_model/categories_model.dart';
+import 'package:shop_app/models/favourites_model/Get_Favourites_Model.dart';
 import 'package:shop_app/models/home_model/home_model.dart';
 import 'package:shop_app/shared/styles/colors/colors.dart';
 import 'package:shop_app/shop_cubit/cubit.dart';
@@ -18,16 +19,20 @@ class FavouritesScreen extends StatelessWidget {
     return BlocConsumer<ShopCubit, ShopStates>(
       listener: (context , state ){},
       builder: (context , state) {
-        return ListView.separated(
-          itemBuilder: (context , index) => buildFavItem(),
-          separatorBuilder: (context , index ) => const Divider(color: Colors.grey,),
-          itemCount: 10,
+        return ConditionalBuilder(
+          condition: state is! ShopLoadingGetFavouritesState,
+          builder: (context) => ListView.separated(
+            itemBuilder: (context , index) => buildFavItem(ShopCubit.get(context).favouritesModel!.data!.data![index] , context ),
+            separatorBuilder: (context , index ) => const Divider(color: Colors.grey,),
+            itemCount: ShopCubit.get(context).favouritesModel!.data!.data!.length,
+          ),
+          fallback: (context) => Center(child: CircularProgressIndicator()),
         );
       },
     );
   }
 
-  Widget buildFavItem() => Padding(
+  Widget buildFavItem(FavouritesData model , context) => Padding(
     padding: const EdgeInsets.all(20.0),
     child: Container(
       height: 120.0,
@@ -37,12 +42,11 @@ class FavouritesScreen extends StatelessWidget {
             alignment: AlignmentDirectional.bottomStart,
             children: [
               Image(
-                image: NetworkImage(''),
-                fit: BoxFit.cover,
+                image: NetworkImage(model.product!.image!),
                 width: 120.0,
                 height: 120.0,
               ),
-              if (1 != 0)
+              if (model.product?.discount != 0)
                 Container(
                   color: Colors.red,
                   padding: EdgeInsets.symmetric(horizontal: 5.0),
@@ -62,7 +66,7 @@ class FavouritesScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'iphone',
+                  model.product!.name!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -74,7 +78,7 @@ class FavouritesScreen extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      '100',
+                      model.product!.price!.toString(),
                       style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
@@ -82,9 +86,9 @@ class FavouritesScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 5.0),
-                    if (1 != 0)
+                    if (model.product?.discount! != 0)
                       Text(
-                        '5000',
+                        model.product!.oldPrice!.toString(),
                         style: TextStyle(
                           fontSize: 14.0,
                           color: Colors.grey,
@@ -95,12 +99,12 @@ class FavouritesScreen extends StatelessWidget {
                     IconButton(
                       padding: EdgeInsets.zero,
                       onPressed: () {
-                        //ShopCubit.get(context).changFavourites(model.id!);
+                        ShopCubit.get(context).changFavourites(model.product!.id!);
                         //print(model.id);
                       },
                       icon: CircleAvatar(
                         radius: 15.0,
-                        //backgroundColor: ShopCubit.get(context).isFav[model.id]! ? defaultColor : Colors.grey ,
+                        backgroundColor: ShopCubit.get(context).isFav[model.product?.id]! ? defaultColor : Colors.grey ,
                         child: const Icon(
                           Icons.favorite_outline_rounded,
                           size: 14.0,

@@ -108,6 +108,8 @@ class ShopCubit extends Cubit<ShopStates>{
 
           if(!changeFavouritesModel!.status!){
             isFav[productId] = !isFav[productId]!;
+          } else {
+            getFavouritesDate();
           }
 
           emit(ShopSuccessfulChangeFavouriteState(changeFavouritesModel!));
@@ -121,6 +123,8 @@ class ShopCubit extends Cubit<ShopStates>{
   FavouritesModel? favouritesModel ;
 
   void getFavouritesDate(){
+
+    emit(ShopLoadingGetFavouritesState());
 
     DioHelper.getData(
       url: FAVOURITES,
