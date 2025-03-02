@@ -1,10 +1,14 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/modules/login/loging_screen.dart';
 import 'package:shop_app/modules/register/cubit/cubit.dart';
 import 'package:shop_app/modules/register/cubit/states.dart';
 
+import '../../layout/home_layout.dart';
+import '../../shared/components/constants.dart';
+import '../../shared/network/local/cache_helper.dart';
 import '../login/cubit/cubit.dart';
 import '../login/cubit/states.dart';
 
@@ -22,7 +26,48 @@ class RegisterScreen extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => ShopRegisterCubit(),
       child: BlocConsumer<ShopRegisterCubit , ShopRegisterStates>(
-        listener: (context , state){},
+        listener: (context , state){
+          if (state is RegisterSuccessState){
+
+            if(state.loginModel.status){
+              print(state.loginModel.message);
+              print(state.loginModel.data?.token);
+
+              CacheHelper.saveData(key: 'token', value: state.loginModel.data?.token).then((value){
+                token = state.loginModel.data?.token;
+                Navigator.pushAndRemoveUntil(context,
+                    MaterialPageRoute(builder : (context)=> HomeLayout()),
+                        (Route<dynamic> route) => false);
+
+              });
+              Fluttertoast.showToast(
+                  msg: state.loginModel.message,
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 5,
+                  backgroundColor: Colors.green,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
+
+            }
+            else{
+              print(state.loginModel.message);
+
+              Fluttertoast.showToast(
+                  msg: state.loginModel.message,
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 5,
+                  backgroundColor: Colors.red,
+                  textColor: Colors.white,
+                  fontSize: 16.0
+              );
+
+            }
+
+          }
+        },
         builder: (context , state){
           return Scaffold(
             appBar: AppBar(),
