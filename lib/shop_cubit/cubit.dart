@@ -165,4 +165,24 @@ class ShopCubit extends Cubit<ShopStates>{
     });
   }
 
+  void updateUserData(){
+
+    emit(ShopLoadingUpdateUserDataState());
+
+    DioHelper.getData(
+      url: PROFILE,
+      token:token,
+
+    ).then((value) {
+      userLoginModel = LoginModel.fromJson(value?.data);
+
+
+      emit(ShopSuccessfulUpdateUserDataState(userLoginModel!));
+
+    }).catchError((error){
+      print(error.toString());
+      emit(ShopErrorUpdateUserDataState());
+    });
+  }
+
 }

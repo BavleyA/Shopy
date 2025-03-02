@@ -80,6 +80,22 @@ class SettingsScreen extends StatelessWidget {
                   height: 50.0,
                   color:  defaultColor,
                   child: MaterialButton(
+                    onPressed: (){
+                      signOut(context);
+                    },
+                    child: Text(
+                      'update your data'.toUpperCase(),
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20.0,),
+                Container(
+                  height: 50.0,
+                  color:  defaultColor,
+                  child: MaterialButton(
                       onPressed: (){
                         signOut(context);
                       },

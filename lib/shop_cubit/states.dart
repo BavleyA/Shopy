@@ -41,3 +41,13 @@ class ShopSuccessfulGetUserDataState extends ShopStates  {
 }
 
 class ShopErrorGetUserDataState extends ShopStates {}
+
+class ShopLoadingUpdateUserDataState extends ShopStates  {}
+
+class ShopSuccessfulUpdateUserDataState extends ShopStates  {
+  late final LoginModel loginModel;
+
+  ShopSuccessfulUpdateUserDataState(this.loginModel);
+}
+
+class ShopErrorUpdateUserDataState extends ShopStates {}
