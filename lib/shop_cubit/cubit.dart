@@ -147,21 +147,21 @@ class ShopCubit extends Cubit<ShopStates>{
 
   void getUserData(){
 
-    emit(ShopLoadingGetFavouritesState());
+    emit(ShopLoadingUserDataState());
 
     DioHelper.getData(
-      url: FAVOURITES,
+      url: PROFILE,
       token:token,
 
     ).then((value) {
-      favouritesModel = FavouritesModel.fromJson(value?.data);
+      userLoginModel = LoginModel.fromJson(value?.data);
 
 
-      emit(ShopSuccessfulGetFavouritesState());
+      emit(ShopSuccessfulGetUserDataState());
 
     }).catchError((error){
       print(error.toString());
-      emit(ShopErrorGetFavouritesState());
+      emit(ShopErrorGetUserDataState());
     });
   }
 
