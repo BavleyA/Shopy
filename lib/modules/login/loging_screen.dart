@@ -6,6 +6,7 @@ import 'package:shop_app/layout/home_layout.dart';
 import 'package:shop_app/modules/login/cubit/cubit.dart';
 import 'package:shop_app/modules/login/cubit/states.dart';
 import 'package:shop_app/modules/register/register_screen.dart';
+import 'package:shop_app/shared/components/constants.dart';
 import 'package:shop_app/shared/network/local/cache_helper.dart';
 
 class LogingScreen extends StatelessWidget {
@@ -28,7 +29,7 @@ class LogingScreen extends StatelessWidget {
               print(state.loginModel.data?.token);
 
               CacheHelper.saveData(key: 'token', value: state.loginModel.data?.token).then((value){
-
+                token = state.loginModel.data?.token;
                 Navigator.pushAndRemoveUntil(context,
                     MaterialPageRoute(builder : (context)=> HomeLayout()),
                     (Route<dynamic> route) => false);
