@@ -9,6 +9,7 @@ import 'package:shop_app/shop_cubit/states.dart';
 
 class SettingsScreen extends StatelessWidget {
 
+  var formKey = GlobalKey<FormState>();
   var nameController = TextEditingController();
   var emailController = TextEditingController();
   var phoneController = TextEditingController();
@@ -29,85 +30,101 @@ class SettingsScreen extends StatelessWidget {
           condition: ShopCubit.get(context).userLoginModel != null,
           builder: (context) =>  Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                defaultFormField(
-                  controller: nameController,
-                  type: TextInputType.name,
-                  validate:(value)
-                  {
-                    if(value!.isEmpty){
-                      return 'name must not be empty';
-                    }
-                    return null;
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  if(state is ShopLoadingUpdateUserDataState)
+                  const LinearProgressIndicator(),
+                  const SizedBox(height: 20.0,),
 
-                  },
-                  label: 'Name',
-                  prefix: Icons.person,
-                ),
-                SizedBox(height: 20.0,),
-                defaultFormField(
-                  controller: emailController,
-                  type: TextInputType.emailAddress,
-                  validate:(value)
-                  {
-                    if(value!.isEmpty){
-                      return 'email must not be empty';
-                    }
-                    return null;
+                  defaultFormField(
+                    controller: nameController,
+                    type: TextInputType.name,
+                    validate:(value)
+                    {
+                      if(value!.isEmpty){
+                        return 'name must not be empty';
+                      }
+                      return null;
 
-                  },
-                  label: 'Email',
-                  prefix: Icons.email,
-                ),
-                SizedBox(height: 20.0,),
-                defaultFormField(
-                  controller: phoneController,
-                  type: TextInputType.phone,
-                  validate:(value)
-                  {
-                    if(value!.isEmpty){
-                      return 'phone must not be empty';
-                    }
-                    return null;
-
-                  },
-                  label: 'Phone Number',
-                  prefix: Icons.phone,
-                ),
-                SizedBox(height: 20.0,),
-                Container(
-                  height: 50.0,
-                  color:  defaultColor,
-                  child: MaterialButton(
-                    onPressed: (){
-                      signOut(context);
                     },
-                    child: Text(
-                      'update your data'.toUpperCase(),
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
+                    label: 'Name',
+                    prefix: Icons.person,
                   ),
-                ),
-                SizedBox(height: 20.0,),
-                Container(
-                  height: 50.0,
-                  color:  defaultColor,
-                  child: MaterialButton(
+                  SizedBox(height: 20.0,),
+                  defaultFormField(
+                    controller: emailController,
+                    type: TextInputType.emailAddress,
+                    validate:(value)
+                    {
+                      if(value!.isEmpty){
+                        return 'email must not be empty';
+                      }
+                      return null;
+
+                    },
+                    label: 'Email',
+                    prefix: Icons.email,
+                  ),
+                  SizedBox(height: 20.0,),
+                  defaultFormField(
+                    controller: phoneController,
+                    type: TextInputType.phone,
+                    validate:(value)
+                    {
+                      if(value!.isEmpty){
+                        return 'phone must not be empty';
+                      }
+                      return null;
+
+                    },
+                    label: 'Phone Number',
+                    prefix: Icons.phone,
+                  ),
+                  SizedBox(height: 20.0,),
+                  Container(
+                    height: 50.0,
+                    color:  defaultColor,
+                    child: MaterialButton(
                       onPressed: (){
-                        signOut(context);
+                        if(formKey.currentState!.validate()){
+
+                          ShopCubit.get(context).updateUserData(
+                            name: nameController.text,
+                            email: emailController.text,
+                            phone: phoneController.text,
+                          );
+
+                        }
+
                       },
-                    child: Text(
-                        'LOGOUT'.toUpperCase(),
-                      style: TextStyle(
-                        color: Colors.white,
+                      child: Text(
+                        'update your data'.toUpperCase(),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(height: 20.0,),
+                  Container(
+                    height: 50.0,
+                    color:  defaultColor,
+                    child: MaterialButton(
+                        onPressed: (){
+                          signOut(context);
+                        },
+                      child: Text(
+                          'LOGOUT'.toUpperCase(),
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
           fallback: (context) => const Center(child: CircularProgressIndicator()),
