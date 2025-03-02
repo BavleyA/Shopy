@@ -5,6 +5,7 @@ import 'package:shop_app/models/categories_model/categories_model.dart';
 import 'package:shop_app/models/favourites_model/Change_favourites_model.dart';
 import 'package:shop_app/models/favourites_model/Get_Favourites_Model.dart';
 import 'package:shop_app/models/home_model/home_model.dart';
+import 'package:shop_app/models/login_model/login_model.dart';
 import 'package:shop_app/modules/categories/categories_screen.dart';
 import 'package:shop_app/modules/favourites/Favourites_Screen.dart';
 import 'package:shop_app/modules/products/products_screen.dart';
@@ -123,6 +124,28 @@ class ShopCubit extends Cubit<ShopStates>{
   FavouritesModel? favouritesModel ;
 
   void getFavouritesDate(){
+
+    emit(ShopLoadingGetFavouritesState());
+
+    DioHelper.getData(
+      url: FAVOURITES,
+      token:token,
+
+    ).then((value) {
+      favouritesModel = FavouritesModel.fromJson(value?.data);
+
+
+      emit(ShopSuccessfulGetFavouritesState());
+
+    }).catchError((error){
+      print(error.toString());
+      emit(ShopErrorGetFavouritesState());
+    });
+  }
+
+  LoginModel? userLoginModel ;
+
+  void getUserData(){
 
     emit(ShopLoadingGetFavouritesState());
 

@@ -30,3 +30,9 @@ class ShopLoadingGetFavouritesState extends ShopStates  {}
 class ShopSuccessfulGetFavouritesState extends ShopStates  {}
 
 class ShopErrorGetFavouritesState extends ShopStates {}
+
+class ShopLoadingUserDataState extends ShopStates  {}
+
+class ShopSuccessfulGetUserDataState extends ShopStates  {}
+
+class ShopErrorGetUserDataState extends ShopStates {}
