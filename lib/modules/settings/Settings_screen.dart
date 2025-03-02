@@ -97,6 +97,7 @@ class SettingsScreen extends StatelessWidget {
           fallback: (context) => const Center(child: CircularProgressIndicator()),
         );
       },
+
     );
   }
 }
